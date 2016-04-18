@@ -1,10 +1,10 @@
-# spacemacs-cheetsheet
+# Spacemacs Custom Config
 
-## Term
+## Term(名词解释)
 
 * `M-m` 表示 `ESC m`
 
-## Hotkey
+## Hotkey(快捷键)
 
 ### Buffer
 
@@ -41,3 +41,4 @@
 
 * `SPC s c` 清除 search 结果高亮
 * `SPC *` `SPC /` 当期工程搜索
+* `jk` 快速连按， 表示退出 helm 模式，进入 Normal 模式
