@@ -37,6 +37,7 @@
 ### Project
 
 * `SPC p f` 当前 project 搜索文件
+* `SPC p t` 寻找当前文件的 root 目录
 
 ### Other
 

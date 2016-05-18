@@ -9,61 +9,52 @@
 ;;
 ;;; License: GPLv3
 
-;;; Commentary:
-
-;; See the Spacemacs documentation and FAQs for instructions on how to implement
-;; a new layer:
-;;
-;;   SPC h SPC layers RET
-;;
-;;
-;; Briefly, each package to be installed or configured by this layer should be
-;; added to `vue-packages'. Then, for each package PACKAGE:
-;;
-;; - If PACKAGE is not referenced by any other Spacemacs layer, define a
-;;   function `vue/init-PACKAGE' to load and initialize the package.
-
-;; - Otherwise, PACKAGE is already referenced by another Spacemacs layer, so
-;;   define the functions `vue/pre-init-PACKAGE' and/or
-;;   `vue/post-init-PACKAGE' to customize the package as it is loaded.
-
 ;;; Code:
 
+(setq vue-packages
+  '(
+    company
+    mmm-mode
+    jade-mode
+    web-mode
+    less-css-mode
+    (vue-mode :location (recipe :fetcher github :repo "sallen450/vue-mode"))
+	))
+
+
 (defun vue/init-vue-mode ()
+    (use-package mmm-mode)
+    (use-package jade-mode)
+    (use-package web-mode)
+    (use-package less-css-mode)
     (use-package vue-mode))
 
-(defconst vue-packages
-  '(
-	(vue-mode :location (recipe
-		:fetcher github
-		:repo "codefalling/vue-mode"))
-	)
-  "The list of Lisp packages required by the vue layer.
+(defun vue/init-mmm-mode ()
+    (use-package mmm-mode))
 
-Each entry is either:
+(defun vue/init-jade-mode ()
+    (use-package jade-mode))
 
-1. A symbol, which is interpreted as a package to be installed, or
+(defun vue/init-web-mode ()
+    (use-package web-mode))
 
-2. A list of the form (PACKAGE KEYS...), where PACKAGE is the
-    name of the package to be installed or loaded, and KEYS are
-    any number of keyword-value-pairs.
+(defun vue/init-less-css-mode ()
+    (use-package less-css-mode))
 
-    The following keys are accepted:
+(when (configuration-layer/layer-usedp 'auto-completion)
 
-    - :excluded (t or nil): Prevent the package from being loaded
-      if value is non-nil
+  ;; Hook company to python-mode
+  (defun vue/post-init-company ()
+    (spacemacs|add-company-hook vue-mode))
 
-    - :location: Specify a custom installation location.
-      The following values are legal:
-
-      - The symbol `elpa' (default) means PACKAGE will be
-        installed using the Emacs package manager.
-
-      - The symbol `local' directs Spacemacs to load the file at
-        `./local/PACKAGE/PACKAGE.el'
-
-      - A list beginning with the symbol `recipe' is a melpa
-        recipe.  See: https://github.com/milkypostman/melpa#recipe-format")
-
+  ;; Add the backend to the major-mode specific backend list
+  ;; (defun vue/init-company-anaconda ()
+  ;;   (use-package company-anaconda
+  ;;     :if (configuration-layer/package-usedp 'company)
+  ;;     :defer t
+  ;;     :init (push 'company-anaconda company-backends-python-mode)))
+  ;; (defun markdown/post-init-company-emoji ()
+  ;;   (push 'company-emoji company-backends-markdown-mode))
+)
 
 ;;; packages.el ends here
